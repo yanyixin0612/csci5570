@@ -29,15 +29,38 @@ class KVClientTable {
    * @param callback_runner     callback runner to handle received replies from servers
    */
   KVClientTable(uint32_t app_thread_id, uint32_t model_id, ThreadsafeQueue<Message>* const sender_queue,
-    const AbstractPartitionManager* const partition_manager, AbstractCallbackRunner* const callback_runner) ;
+    const AbstractPartitionManager* const partition_manager, AbstractCallbackRunner* const callback_runner) 
+      : app_thread_id_(app_thread_id),
+        model_id_(model_id),
+        sender_queue_(sender_queue),
+        partition_manager_(partition_manager),
+        callback_runner_(callback_runner){};
   // ========== API ========== //
-  void Clock();
+    void Clock();
   // vector version
-   void Add(const std::vector<Key>& keys, const std::vector<Val>& vals) ;
-   void Get(const std::vector<Key>& keys, std::vector<Val>* vals) ;
+    void Add(const std::vector<Key>& keys, const std::vector<Val>& vals) {}
+    void Get(const std::vector<Key>& keys, std::vector<Val>* vals) {}
   // sarray version
-  void Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) ;
-  void Get(const third_party::SArray<Key>& keys, third_party::SArray<Val>* vals) ;
+  void Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) {
+      KVPairs kvtmp=std::make_pair(keys,vals);
+      std::vector<std::pair<int,KVPairs> sliced;
+      partition_manager_.Slice(kvtmp,&sliced);
+      uint32_t count=0;
+      while(count<sliced.size()){
+        Message m;
+        third_party::SArray<char> datatmp;
+        datatmp.push_back(sliced[count].second.first);
+        datatmp.push_back(sliced[count].second.second);
+        m.data.push_back(datatmp);
+        count++;
+        m.meta.sender=app_thread_id_;
+        m.meta.recver=sliced[count].first;
+        m.meta.flag=Flag::kAdd;
+        m.model_id=model_id_;
+        sender_queue_.push(m);
+    }
+  }
+  void Get(const third_party::SArray<Key>& keys, third_party::SArray<Val>* vals) {}
   // ========== API ========== //
 
  private:
