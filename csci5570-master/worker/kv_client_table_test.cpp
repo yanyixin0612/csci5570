@@ -40,6 +40,7 @@ class FakePartitionManager : public AbstractPartitionManager {
     sliced->at(0).first = server_thread_ids_[0];
     sliced->at(0).second.first = kvs.first.segment(0, pos);
     sliced->at(0).second.second = kvs.second.segment(0, pos);
+    EXPECT_EQ(sliced->at(0).second.second,3);
     sliced->at(1).first = server_thread_ids_[1];
     sliced->at(1).second.first = kvs.first.segment(pos, n);
     sliced->at(1).second.second = kvs.second.segment(pos, n);
