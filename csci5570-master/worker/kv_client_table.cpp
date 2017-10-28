@@ -10,7 +10,7 @@ namespace csci5570{
           callback_runner_(callback_runner){
       }
 
-    void KVClientTable::Add(const std::vector<Key>& keys, const std::vector<Val>& vals) {
+    void KVClientTable::Add(const third_party::SArray<Key>& keys,const third_party::SArray<Val>& vals) {
         KVPairs kvtmp=std::make_pair(keys,vals);
         std::vector<std::pair<int,KVPairs> sliced;
         partition_manager_.Slice(kvtmp,&sliced);
