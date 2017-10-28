@@ -1,14 +1,4 @@
-#pragma once
 
-#include "base/abstract_partition_manager.hpp"
-#include "base/magic.hpp"
-#include "base/message.hpp"
-#include "base/third_party/sarray.h"
-#include "base/threadsafe_queue.hpp"
-#include "worker/abstract_callback_runner.hpp"
-
-#include <cinttypes>
-#include <vector>
 #include "worker/kv_client_table.hpp"
 
 namespace csci5570{
