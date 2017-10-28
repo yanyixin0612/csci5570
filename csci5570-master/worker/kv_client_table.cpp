@@ -1,14 +1,25 @@
+#pragma once
+
+#include "base/abstract_partition_manager.hpp"
+#include "base/magic.hpp"
+#include "base/message.hpp"
+#include "base/third_party/sarray.h"
+#include "base/threadsafe_queue.hpp"
+#include "worker/abstract_callback_runner.hpp"
+
+#include <cinttypes>
+#include <vector>
 #include "worker/kv_client_table.hpp"
 
 namespace csci5570{
+
     KVClientTable::KVClientTable(uint32_t app_thread_id, uint32_t model_id, ThreadsafeQueue<Message>* const sender_queue,
         const AbstractPartitionManager* const partition_manager, AbstractCallbackRunner* const callback_runner)
         : app_thread_id_(app_thread_id),
           model_id_(model_id),
           sender_queue_(sender_queue),
           partition_manager_(partition_manager),
-          callback_runner_(callback_runner){
-      }
+          callback_runner_(callback_runner){}
 
     void KVClientTable::Add(const third_party::SArray<Key>& keys,const third_party::SArray<Val>& vals) {
         KVPairs kvtmp=std::make_pair(keys,vals);
