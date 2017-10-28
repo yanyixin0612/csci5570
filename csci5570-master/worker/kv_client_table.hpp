@@ -29,7 +29,7 @@ class KVClientTable {
    * @param callback_runner     callback runner to handle received replies from servers
    */
   KVClientTable(uint32_t app_thread_id, uint32_t model_id, ThreadsafeQueue<Message>* const sender_queue,
-    const AbstractPartitionManager* const partition_manager, AbstractCallbackRunner* const callback_runner);
+    const AbstractPartitionManager* const partition_manager, AbstractCallbackRunner* const callback_runner)
   // ========== API ========== //
   void Clock();
   // vector version
