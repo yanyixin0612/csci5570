@@ -7,7 +7,7 @@ namespace csci5570{
       model_id_(model_id),
       sender_queue_(sender_queue),
       partition_manager_(partition_manager),
-      callback_runner_(callback_runner){};
+      callback_runner_(callback_runner){}
 
     void KVClientTable::Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) {
         KVPairs kvtmp=std::make_pair(keys,vals);
