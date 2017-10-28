@@ -49,10 +49,8 @@ class KVClientTable {
       uint32_t count=0;
       while(count<sliced.size()){
         Message m;
-        third_party::SArray<char> datatmp;
-        datatmp.push_back(sliced[count].second.first);
-        datatmp.push_back(sliced[count].second.second);
-        m.data.push_back(datatmp);
+        m.data.Adddata(sliced[count].second.first);
+        m.data.Adddata(sliced[count].second.second)
         count++;
         m.meta.sender=app_thread_id_;
         m.meta.recver=sliced[count].first;
