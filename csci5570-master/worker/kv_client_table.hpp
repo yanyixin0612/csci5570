@@ -43,14 +43,13 @@ class KVClientTable {
     void Get(const std::vector<Key>& keys, std::vector<Val>* vals) {}
   // sarray version
     void Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) {
-      KVPairs kvtmp=std::make_pair(keys,vals);
       std::vector<std::pair<int,KVPairs>> sliced;
-      partition_manager_->Slice(kvtmp,&sliced);
+      partition_manager_->Slice(std::make_pair(keys,vals),&sliced);
       uint32_t count=0;
       while(count<sliced.size()){
         Message m;
         m.AddData(sliced[count].second.first);
-        m.AddData(sliced[count].second.second)
+        m.AddData(sliced[count].second.second);
         count++;
         m.meta.sender=app_thread_id_;
         m.meta.recver=sliced[count].first;
