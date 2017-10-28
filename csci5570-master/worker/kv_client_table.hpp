@@ -47,6 +47,7 @@ class KVClientTable {
       int i=0;
       while(i<vals.size()){
         tmp.push_back(vals[i]);
+        i++;
       }
       std::vector<std::pair<int,KVPairs>> sliced;
       partition_manager_->Slice(std::make_pair(keys,tmp),&sliced);
