@@ -49,8 +49,8 @@ class KVClientTable {
       uint32_t count=0;
       while(count<sliced.size()){
         Message m;
-        m.data.AddData(sliced[count].second.first);
-        m.data.AddData(sliced[count].second.second)
+        m.AddData(sliced[count].second.first);
+        m.AddData(sliced[count].second.second)
         count++;
         m.meta.sender=app_thread_id_;
         m.meta.recver=sliced[count].first;
