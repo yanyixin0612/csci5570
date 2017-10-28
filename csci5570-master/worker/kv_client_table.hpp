@@ -34,7 +34,7 @@ class KVClientTable {
     model_id_(model_id),
     sender_queue_(sender_queue),
     partition_manager_(partition_manager),
-    callback_runner_(callback_runner){}；
+    callback_runner_(callback_runner){};
   // ========== API ========== //
   void Clock();
   // vector version
