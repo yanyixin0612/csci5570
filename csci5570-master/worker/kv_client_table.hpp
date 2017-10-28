@@ -50,12 +50,12 @@ class KVClientTable {
         Message m;
         m.AddData(sliced[count].second.first);
         m.AddData(sliced[count].second.second);
-        count++;
         m.meta.sender=app_thread_id_;
         m.meta.recver=sliced[count].first;
         m.meta.flag=Flag::kAdd;
         m.meta.model_id=model_id_;
         sender_queue_->Push(m);
+        count++;
     }
   }
   void Get(const third_party::SArray<Key>& keys, third_party::SArray<Val>* vals) {}
