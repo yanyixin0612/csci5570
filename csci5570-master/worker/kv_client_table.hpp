@@ -44,7 +44,7 @@ class KVClientTable {
   // sarray version
     void Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) {
       KVPairs kvtmp=std::make_pair(keys,vals);
-      std::vector<std::pair<int,KVPairs> sliced;
+      std::vector<std::pair<int,KVPairs>> sliced;
       partition_manager_->Slice(kvtmp,&sliced);
       uint32_t count=0;
       while(count<sliced.size()){
