@@ -21,7 +21,7 @@ namespace csci5570 {
 template <typename Val>
 class KVClientTable {
  public:
-    using KVPairs = std::pair<third_party::SArray<Key>, third_party::SArray<float>>;
+    using KVPairs = std::pair<third_party::SArray<Key>, third_party::SArray<double>>;
   /**
    * @param app_thread_id       user thread id
    * @param model_id            model id
@@ -43,8 +43,9 @@ class KVClientTable {
     void Get(const std::vector<Key>& keys, std::vector<Val>* vals) {}
   // sarray version
     void Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) {
+      valst=third_party::SArray<double>(vals)
       std::vector<std::pair<int,KVPairs>> sliced;
-      partition_manager_->Slice(std::make_pair(keys,vals),&sliced);
+      partition_manager_->Slice(std::make_pair(keys,valst),&sliced);
       uint32_t count=0;
       while(count<sliced.size()){
         Message m;
