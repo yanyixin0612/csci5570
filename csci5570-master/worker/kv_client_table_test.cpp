@@ -37,10 +37,10 @@ class FakePartitionManager : public AbstractPartitionManager {
     size_t n = kvs.first.size();
     sliced->resize(2);
     auto pos = std::lower_bound(kvs.first.begin(), kvs.first.end(), split_) - kvs.first.begin();
+    EXPECT_EQ(pos, 9);
     sliced->at(0).first = server_thread_ids_[0];
     sliced->at(0).second.first = kvs.first.segment(0, pos);
     sliced->at(0).second.second = kvs.second.segment(0, pos);
-    EXPECT_EQ(sliced->at(0).second.second,3);
     sliced->at(1).first = server_thread_ids_[1];
     sliced->at(1).second.first = kvs.first.segment(pos, n);
     sliced->at(1).second.second = kvs.second.segment(pos, n);
