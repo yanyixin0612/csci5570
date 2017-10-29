@@ -46,7 +46,7 @@ class KVClientTable {
       third_party::SArray<double> tmp;
       int i=0;
       while(i<vals.size()){
-        tmp.push_back(vals[i]);
+        tmp.push_back(vals.data()[i]);
         i++;
       }
       std::vector<std::pair<int,KVPairs>> sliced;
