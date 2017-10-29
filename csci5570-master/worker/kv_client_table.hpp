@@ -1,5 +1,7 @@
 #pragma once
 
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 #include "base/abstract_partition_manager.hpp"
 #include "base/magic.hpp"
 #include "base/message.hpp"
