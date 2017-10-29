@@ -127,8 +127,8 @@ TEST_F(TestKVClientTable, Add) {
   FakeCallbackRunner callback_runner;
   KVClientTable<float> table(kTestAppThreadId, kTestModelId, &queue, &manager, &callback_runner);
 
-  third_party::SArray<Key> keys = {3, 4, 5, 6};
-  third_party::SArray<float> vals = {0.1, 0.1, 0.1, 0.1};
+  std::vector<Key> keys = {3, 4, 5, 6};
+  std::vector<float> vals = {0.1, 0.1, 0.1, 0.1};
   table.Add(keys, vals);  // {3,4,5,6} -> {3}, {4,5,6}
   Message m1, m2;
   queue.WaitAndPop(&m1);

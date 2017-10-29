@@ -39,32 +39,38 @@ class KVClientTable {
   // ========== API ========== //
     void Clock();
   // vector version
-    void Add(const std::vector<Key>& keys, const std::vector<Val>& vals) {}
+    void Add(const std::vector<Key>& keys, const std::vector<Val>& vals) {
+        third_party::SArray<double> vtmp;
+        third_party::SArray<Key> ktmp;
+        int i=0;
+        while(i<vals.size()){
+          vtmp.push_back(vals[i]);
+          i++;
+        }
+        i=0;
+        while(i<keys.size()){
+          ktmp.push_back(keys[i]);
+          i++;
+        }
+
+        std::vector<std::pair<int,KVPairs>> sliced;
+        partition_manager_->Slice(std::make_pair(ktmp,vtmp),&sliced);
+        uint32_t count=0;
+        while(count<sliced.size()){
+          Message m;
+          m.AddData(sliced[count].second.first);
+          m.AddData(sliced[count].second.second);
+          m.meta.sender=app_thread_id_;
+          m.meta.recver=sliced[count].first;
+          m.meta.flag=Flag::kAdd;
+          m.meta.model_id=model_id_;
+          sender_queue_->Push(m);
+          count++;
+    }
     void Get(const std::vector<Key>& keys, std::vector<Val>* vals) {}
   // sarray version
-    void Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) {
-      third_party::SArray<double> tmp;
-      int i=0;
-      while(i<vals.size()){
-        tmp.push_back(vals.data()[i]);
-        i++;
-      }
-      std::vector<std::pair<int,KVPairs>> sliced;
-      partition_manager_->Slice(std::make_pair(keys,tmp),&sliced);
-      uint32_t count=0;
-      while(count<sliced.size()){
-        Message m;
-        m.AddData(sliced[count].second.first);
-        m.AddData(sliced[count].second.second);
-        m.meta.sender=app_thread_id_;
-        m.meta.recver=sliced[count].first;
-        m.meta.flag=Flag::kAdd;
-        m.meta.model_id=model_id_;
-        sender_queue_->Push(m);
-        count++;
-    }
-  }
-  void Get(const third_party::SArray<Key>& keys, third_party::SArray<Val>* vals) {}
+    void Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) {}
+    void Get(const third_party::SArray<Key>& keys, third_party::SArray<Val>* vals) {}
   // ========== API ========== //
 
  private:
