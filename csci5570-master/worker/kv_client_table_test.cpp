@@ -147,7 +147,7 @@ TEST_F(TestKVClientTable, Add) {
   res_vals = m1.data[1];
   EXPECT_EQ(m1.data[1].data()[0], 3);
   EXPECT_EQ(m1.data[1].data()[1], 3);
-  ASSERT_EQ(res_vals.size(), 1);  // val .1
+  EXPECT_EQ(res_vals.size(), 1);  // val .1
   EXPECT_FLOAT_EQ(res_vals[0], float(0.1));
 
   EXPECT_EQ(m2.meta.sender, kTestAppThreadId);
