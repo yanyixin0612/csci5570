@@ -34,6 +34,7 @@ class FakePartitionManager : public AbstractPartitionManager {
 
   void Slice(const KVPairs& kvs, std::vector<std::pair<int, KVPairs>>* sliced) const override {
     EXPECT_EQ(kvs.first.size(), kvs.second.size());
+    EXPECT_EQ(kvs.second, {0.1,0.1,0.1,0.2});
     size_t n = kvs.first.size();
     sliced->resize(2);
     auto pos = std::lower_bound(kvs.first.begin(), kvs.first.end(), split_) - kvs.first.begin();

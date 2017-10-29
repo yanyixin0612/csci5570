@@ -1,7 +1,5 @@
 #pragma once
 
-#include "glog/logging.h"
-#include "gtest/gtest.h"
 #include "base/abstract_partition_manager.hpp"
 #include "base/magic.hpp"
 #include "base/message.hpp"
@@ -51,7 +49,6 @@ class KVClientTable {
         tmp.push_back(vals[i]);
         i++;
       }
-      EXPECT_EQ(tmp, {0.1,0.1,0.1,0.2});
       std::vector<std::pair<int,KVPairs>> sliced;
       partition_manager_->Slice(std::make_pair(keys,tmp),&sliced);
       uint32_t count=0;
