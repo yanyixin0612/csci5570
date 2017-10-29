@@ -158,7 +158,7 @@ TEST_F(TestKVClientTable, Add) {
   res_keys = m2.data[0];
   ASSERT_EQ(res_keys.size(), 3);
   res_vals = m2.data[1];
-  ASSERT_EQ(res_vals.size(), 3);
+  EXPECT_EQ(res_vals.size(), 3);
   EXPECT_EQ(res_keys[0], 4);
   EXPECT_EQ(res_keys[1], 5);
   EXPECT_EQ(res_keys[2], 6);
