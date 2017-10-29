@@ -66,7 +66,8 @@ class KVClientTable {
           m.meta.model_id=model_id_;
           sender_queue_->Push(m);
           count++;
-    }
+        }
+      }
     void Get(const std::vector<Key>& keys, std::vector<Val>* vals) {}
   // sarray version
     void Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) {}
