@@ -40,7 +40,7 @@ class KVClientTable {
     void Clock();
   // vector version
     void Add(const std::vector<Key>& keys, const std::vector<Val>& vals) {
-        third_party::SArray<float> vtmp;
+        third_party::SArray<double> vtmp;
         third_party::SArray<Key> ktmp;
         int i=0;
         while(i<vals.size()){
@@ -60,8 +60,13 @@ class KVClientTable {
           Message m;
           third_party::SArray<char> key_char;
           key_char=sliced[count].second.first;
+          third_party::SArray<float> val_chart;
+          int j=0;
+          while(j<sliced[count].second.second.size()){
+            val_chart.push_back((float)sliced[count].second.second.data()[j]);
+          }
           third_party::SArray<char> val_char;
-          val_char=sliced[count].second.second;
+          val_char=val_chart;
           m.AddData(key_char);
           m.AddData(val_char);
           m.meta.sender=app_thread_id_;
