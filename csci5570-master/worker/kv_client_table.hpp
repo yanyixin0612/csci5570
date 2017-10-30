@@ -40,16 +40,16 @@ class KVClientTable {
     void Clock();
   // vector version
     void Add(const std::vector<Key>& keys, const std::vector<Val>& vals) {
-        third_party::SArray<double> vtmp;
+        third_party::SArray<float> vtmp;
         third_party::SArray<Key> ktmp;
         int i=0;
         while(i<vals.size()){
-          vtmp.push_back(vals.data()[i]);
+          vtmp.push_back(vals[i]);
           i++;
         }
         i=0;
         while(i<keys.size()){
-          ktmp.push_back(keys.data()[i]);
+          ktmp.push_back(keys[i]);
           i++;
         }
 
