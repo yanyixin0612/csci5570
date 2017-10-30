@@ -64,6 +64,7 @@ class KVClientTable {
           int j=0;
           while(j<sliced[count].second.second.size()){
             val_chart.push_back((float)sliced[count].second.second.data()[j]);
+            j++;
           }
           third_party::SArray<char> val_char;
           val_char=val_chart;
