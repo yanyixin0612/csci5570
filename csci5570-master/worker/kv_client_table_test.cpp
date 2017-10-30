@@ -145,8 +145,6 @@ TEST_F(TestKVClientTable, Add) {
   EXPECT_EQ(res_keys[0], 3);
   third_party::SArray<float> res_vals;
   res_vals = m1.data[1];
-  EXPECT_EQ(m1.data[1].data()[0], 3);
-  EXPECT_EQ(m1.data[1].data()[1], 3);
   EXPECT_EQ(res_vals.size(), 1);  // val .1
   EXPECT_FLOAT_EQ(res_vals[0], float(0.1));
 

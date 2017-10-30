@@ -44,12 +44,12 @@ class KVClientTable {
         third_party::SArray<Key> ktmp;
         int i=0;
         while(i<vals.size()){
-          vtmp.push_back(vals[i]);
+          vtmp.push_back(vals.data()[i]);
           i++;
         }
         i=0;
         while(i<keys.size()){
-          ktmp.push_back(keys[i]);
+          ktmp.push_back(keys.data()[i]);
           i++;
         }
 
