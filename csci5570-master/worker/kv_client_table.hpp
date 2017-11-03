@@ -52,7 +52,6 @@ class KVClientTable {
           ktmp.push_back(keys[i]);
           i++;
         }
-
         std::vector<std::pair<int,KVPairs>> sliced;
         partition_manager_->Slice(std::make_pair(ktmp,vtmp),&sliced);
         uint32_t count=0;
@@ -78,7 +77,32 @@ class KVClientTable {
           count++;
         }
       }
-    void Get(const std::vector<Key>& keys, std::vector<Val>* vals) {}
+    void Get(const std::vector<Key>& keys, std::vector<Val>* vals) {
+        third_party::SArray<Key> ktmp;
+        int i=0;
+        while(i<keys.size()){
+          ktmp.push_back(keys[i]);
+          i++;
+        }
+        std::vector<std::pair<int,third_party::SArray<Key>> sliced;
+        partition_manager_->Slice(ktmp,&sliced);
+        std::function<void(Message&)> recv_handle =[this](Message m){
+          m.meta.sender=app_thread_id_;
+          m.meta.model_id=model_id_;
+          m.meta.flag=Flag::kGet;
+          for(int i=0;i<sliced.size();i++){
+            if(sliced[i].second==m.data[0]){
+              m.data.recver=i;
+            }
+          }
+          sender_queue_->push(m);
+        };
+        std::function<void()> recv_finish_handle =[](){};
+        callback_runner_->RegisterRecvFinishHandle(app_thread_id_,model_id_,recv_finish_handle);
+        callback_runner_->RegisterRecvHandle(app_thread_id_,model_id_,recv_handle)
+        callback_runner_->NewRequest(app_thread_id_,model_id_,sliced.size());
+        callback_runner_->WaitRequest(app_thread_id_,model_id_);
+    }
   // sarray version
     void Add(const third_party::SArray<Key>& keys, const third_party::SArray<Val>& vals) {}
     void Get(const third_party::SArray<Key>& keys, third_party::SArray<Val>* vals) {}
