@@ -145,7 +145,7 @@ TEST_F(TestKVClientTable, Add) {
   EXPECT_EQ(res_keys[0], 3);
   third_party::SArray<float> res_vals;
   res_vals = m1.data[1];
-  EXPECT_EQ(res_vals.size(), 1);  // val .1
+  ASSERT_EQ(res_vals.size(), 1);  // val .1
   EXPECT_FLOAT_EQ(res_vals[0], float(0.1));
 
   EXPECT_EQ(m2.meta.sender, kTestAppThreadId);
@@ -156,7 +156,7 @@ TEST_F(TestKVClientTable, Add) {
   res_keys = m2.data[0];
   ASSERT_EQ(res_keys.size(), 3);
   res_vals = m2.data[1];
-  EXPECT_EQ(res_vals.size(), 3);
+  ASSERT_EQ(res_vals.size(), 3);
   EXPECT_EQ(res_keys[0], 4);
   EXPECT_EQ(res_keys[1], 5);
   EXPECT_EQ(res_keys[2], 6);
