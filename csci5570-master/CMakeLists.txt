@@ -45,8 +45,7 @@ set(HUSKY_EXTERNAL_LIB ${GLOG_LIBRARY} ${GFLAGS_LIBRARY} ${ZMQ_LIBRARY} ${CMAKE_
 # libhdfs3
 if(LIBHDFS3_FOUND)
     list(APPEND HUSKY_EXTERNAL_INCLUDE ${LIBHDFS3_INCLUDE_DIR})
-    #list(APPEND HUSKY_EXTERNAL_LIB ${LIBHDFS3_LIBRARY})
-    list(APPEND HUSKY_EXTERNAL_LIB ${LIBHDFS3_LIBRARY} ${LIBPROTOBUF_LIBRARY})
+    list(APPEND HUSKY_EXTERNAL_LIB ${LIBHDFS3_LIBRARY})
     list(APPEND HUSKY_EXTERNAL_DEFINITION ${LIBHDFS3_DEFINITION})
 endif(LIBHDFS3_FOUND)
 
@@ -54,6 +53,5 @@ add_subdirectory(base)
 add_subdirectory(comm)
 add_subdirectory(server)
 add_subdirectory(io)
-add_subdirectory(driver)
 
 add_subdirectory(test)
