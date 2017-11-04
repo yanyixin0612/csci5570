@@ -84,22 +84,22 @@ class KVClientTable {
           ktmp.push_back(keys[i]);
           i++;
         }
-        std::vector<std::pair<int,third_party::SArray<Key>> sliced;
+        std::vector<std::pair<int,third_party::SArray<Key>>> sliced;
         partition_manager_->Slice(ktmp,&sliced);
-        std::function<void(Message&)> recv_handle =[this](Message m){
+        std::function<void(Message&)> recv_handle =[=](Message m){
           m.meta.sender=app_thread_id_;
           m.meta.model_id=model_id_;
           m.meta.flag=Flag::kGet;
           for(int i=0;i<sliced.size();i++){
             if(sliced[i].second==m.data[0]){
-              m.data.recver=i;
+              m.meta.recver=i;
             }
           }
-          sender_queue_->push(m);
+          sender_queue_->Push(m);
         };
         std::function<void()> recv_finish_handle =[](){};
         callback_runner_->RegisterRecvFinishHandle(app_thread_id_,model_id_,recv_finish_handle);
-        callback_runner_->RegisterRecvHandle(app_thread_id_,model_id_,recv_handle)
+        callback_runner_->RegisterRecvHandle(app_thread_id_,model_id_,recv_handle);
         callback_runner_->NewRequest(app_thread_id_,model_id_,sliced.size());
         callback_runner_->WaitRequest(app_thread_id_,model_id_);
     }
